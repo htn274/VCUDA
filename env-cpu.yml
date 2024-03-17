@@ -1,0 +1,30 @@
+channels: 
+  - pytorch
+  - conda-forge
+  - anaconda
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - pandas
+  - seaborn
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - tensorboard
+  - jupyterlab
+  - nb_conda_kernels
+  - ipywidgets
+  - pytorch
+  - tqdm
+  - pip:
+    - pyyaml
+    - oyaml
+    - python-dotenv
+    - wandb
+    - pytorch-lightning
+    - torch-tb-profiler
+    - networkx
+    - jaxlib
+    - dibs-lib
+    - tueplots
