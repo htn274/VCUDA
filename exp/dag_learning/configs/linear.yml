@@ -13,7 +13,7 @@ data:
   noise_scale: 1.
 methods:
   VCUDA:
-    run: true
+    run: false
     verbose: false
     n_posterior_samples: 100
     # dataloader
