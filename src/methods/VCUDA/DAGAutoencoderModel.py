@@ -92,15 +92,15 @@ class DAGAutoencoderModel(LightningModule):
         # calculate KL p_score
         p_score_dist = torch.distributions.Normal(loc=self.dag_sampler.mean_p_score, scale=torch.exp(self.dag_sampler.scale_p_score) * torch.ones(num_nodes, device=self.device))
         kl_p_score = torch.distributions.kl_divergence(p_score_dist, prior_p_score_dist).sum()
-        kl_term = self.hparams['lambda_e'] * kl_edge + self.hparams['lambda_p_score']* kl_p_score
+        kl_term = kl_edge + kl_p_score
         return kl_term
 
     def loss(self, X_pred, X):
         N, d = X.shape
         mse = nn.MSELoss(reduction='sum')
-        reconstruction_loss = mse(X_pred, X) / (N * d)
-        kl_term = self.cal_kl_term() / d
-        ELBO_loss = reconstruction_loss + kl_term 
+        reconstruction_loss = mse(X_pred, X)
+        kl_term = self.cal_kl_term()
+        ELBO_loss = (reconstruction_loss + kl_term)/d
         return ELBO_loss, reconstruction_loss, kl_term
 
     def update_mask(self, new_mask=None):
