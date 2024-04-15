@@ -9,7 +9,7 @@ import logging
 import wandb
 
 from src.utils import Timer, gen_data_grid, load_data, load_methods, pmap, read_config, save_file, load_file 
-from src.metrics import edge_apr, edge_auroc
+from src.metrics import edge_apr, edge_auroc, exp_shd
 from src.globals import PROJECT_NAME
 from src.viz import plot_multiple_d
 
@@ -30,10 +30,11 @@ def process(task: dict):
     return output
 
 def eval_res(method_name:str, res: pd.DataFrame) -> pd.DataFrame:
+    res[['SHD', 'extra', 'missing', 'reverse']] = res.apply(lambda x: exp_shd(x['posterior_adj'], x['true_adj']), axis=1, result_type='expand')
     res['Dir-AUC-ROC'] = res.apply(lambda x: edge_auroc(x['pred_prob'], x['true_adj']), axis=1)
     res['Dir-AUC-PR'] = res.apply(lambda x: edge_apr(x['pred_prob'], x['true_adj']), axis=1)
     res['Method'] = method_name
-    print(res[['Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE']])
+    # print(res[['Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE']])
     return res
 
 def run(method_name:str, model:object, model_cfg:dict, data_cfg:dict, datasets:tuple, n_jobs:int=1) -> pd.DataFrame:
@@ -127,7 +128,7 @@ if __name__ == '__main__':
         res = main(cfg['methods'], data_cfg, datasets, methods_dict, n_jobs=cfg['n_jobs'], wandb_logger=wandb_logger)
         total_res.append(res)
     total_res = pd.concat(total_res)
-    metrics = ['Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE', 'Training time']
+    metrics = ['SHD', 'Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE', 'Training time']
     res_summary = print_final_result(total_res, metrics=metrics)
     if args.plot: fig = plot_multiple_d(total_res=total_res, metrics=metrics, outdir=CUR_DIR)
     if wandb_logger:
