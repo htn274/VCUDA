@@ -34,7 +34,7 @@ def eval_res(method_name:str, res: pd.DataFrame) -> pd.DataFrame:
     res['Dir-AUC-ROC'] = res.apply(lambda x: edge_auroc(x['pred_prob'], x['true_adj']), axis=1)
     res['Dir-AUC-PR'] = res.apply(lambda x: edge_apr(x['pred_prob'], x['true_adj']), axis=1)
     res['Method'] = method_name
-    # print(res[['Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE']])
+    print(res[['SHD', 'extra', 'missing', 'reverse', 'Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE']])
     return res
 
 def run(method_name:str, model:object, model_cfg:dict, data_cfg:dict, datasets:tuple, n_jobs:int=1) -> pd.DataFrame:

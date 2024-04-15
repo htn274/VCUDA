@@ -13,7 +13,7 @@ data:
   noise_scale: 1.
 methods:
   VCUDA:
-    run: True
+    run: true
     verbose: false
     n_posterior_samples: 100
     # dataloader
@@ -34,7 +34,7 @@ methods:
     lambda_p_score: 1.e-4 # regularize for kl_p_score
     prior_p_scale: 0.1
     lambda_e: 3.e-3 # regularize for kl_edge
-    prior_edge_prob: 0.01
+    prior_edge_prob: 0.1
     scaled: False
     # Training
     max_epochs: 500
