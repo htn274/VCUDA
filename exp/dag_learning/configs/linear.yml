@@ -14,6 +14,7 @@ data:
 methods:
   VCUDA:
     run: true
+    run: true
     verbose: false
     n_posterior_samples: 100
     # dataloader
@@ -40,6 +41,7 @@ methods:
     max_epochs: 500
     val_freq: 10
     log_freq: 100
+    device: cuda
     device: cuda
 
   DDS:

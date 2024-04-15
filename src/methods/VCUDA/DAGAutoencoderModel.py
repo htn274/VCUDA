@@ -49,7 +49,7 @@ DAG_sampler_dict = {
 class DAGAutoencoderModel(LightningModule):
     def __init__(self, input_dim, output_dim, hidden_dims,
                  temp_w, temp_p, hard,
-                 lr_f, lr_dag, lambda_p_score,lambda_e, 
+                 lr_f, lr_dag, 
                  prior_edge_prob, prior_p_scale,
                  max_epochs, seed_model, verbose, gt_adj, 
                  l2_f=0.0, factorize_type=None, 
