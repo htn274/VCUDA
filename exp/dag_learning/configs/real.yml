@@ -1,9 +1,10 @@
-n_jobs: 1
+n_jobs: 10
 data:
   datanames: [sachs]
   dag_type: SF
+  n_dataset: 10
 methods:
-  Ours:
+  VCUDA:
     run: false
     verbose: false
     n_posterior_samples: 100
@@ -14,12 +15,12 @@ methods:
     batch_size: 256 # Batch size. i 
     # args_achitecture: args for network architecture of FuntionalModel
     seed_model: 0
-    hidden_dims: 512
+    hidden_dims: 64 
     factorize_type: NULL
     temp_w: 1.0
-    temp_p: 1.0
+    temp_p: 0.3
     hard: true
-    lr_dag: 1.e-5
+    lr_dag: 0.01 
     lr_f: 5.e-3 
     l2_f: 1.e-4
     lambda_p_score: 1.e-4 # regularize for kl_p_score
@@ -27,10 +28,10 @@ methods:
     lambda_e: 3.e-3 # regularize for kl_edge
     prior_edge_prob: 0.01
     # Training
-    max_epochs: 1_000
-    val_freq: 50
+    max_epochs: 500
+    scaled: True
+    val_freq: 10
     log_freq: 100
-    device: cpu
 
   DDS:
     run: false
@@ -72,6 +73,6 @@ methods:
     run: false
 
   DiBS: 
-    run: true
+    run: false
     n_posterior_samples: 100
     steps: 3000
