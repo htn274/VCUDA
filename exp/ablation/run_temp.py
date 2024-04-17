@@ -122,7 +122,7 @@ def plot(args):
     plt.rcParams.update(axes.lines())
     plt.rcParams.update(fontsizes._from_base(base=9))
     g = sns.FacetGrid(df, row='Same', col='Metric', sharey=False, aspect=1.2)
-    g.map_dataframe(sns.boxplot, x='temp_p', y='Value', palette=colors)
+    g.map_dataframe(sns.lineplot, x='temp_p', y='Value', palette=colors,  errorbar='se', err_style='band', markers=True)
     g.set_xlabels(r'Temperature $t$')
     g.set_ylabels('')
     g.set_titles(r'{col_name}')
@@ -137,6 +137,6 @@ if __name__ == '__main__':
     cfg_path = CUR_DIR / 'linear.yml'
     args = read_config(cfg_path) 
     print(f'{args=}')
-    run(args)
+    # run(args)
     plot(args)
     
