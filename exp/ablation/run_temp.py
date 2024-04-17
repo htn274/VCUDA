@@ -13,6 +13,7 @@ import os
 import glob
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 from tueplots import axes, bundles, figsizes, fontsizes
 # wandb might cause an error without this.
 os.environ["WANDB_START_METHOD"] = "thread"
@@ -108,8 +109,8 @@ def format_metric(metric):
         texts = metric.split('_')
         return (r'${main}_\textrm{{{sub}}}$($\downarrow$)'.format(main=texts[0], sub=texts[1]))
     if metric in higher_metrics:
-        return (r'\textbf{{{metric}}}($\uparrow$)'.format(metric=metric))
-    return (r'\textbf{{{metric}}}($\downarrow$)'.format(metric=metric))
+        return r'\textbf{{{metric}}} ($\uparrow$)'.format(metric=metric)
+    return (r'\textbf{{{metric}}} ($\downarrow$)'.format(metric=metric))
 
 def plot(args):
     df = pd.read_csv(f'{CUR_DIR}/res_temp/linear.csv')
@@ -128,6 +129,7 @@ def plot(args):
     g.set_titles(r'{col_name}')
     for _, ax in enumerate(g.axes.flat):
         ax.grid(axis='y', linestyle='--')
+        ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     g.tight_layout() 
     g.savefig(CUR_DIR / 'temps.pdf')
         
