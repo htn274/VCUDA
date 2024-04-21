@@ -105,8 +105,8 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--cfg_file', type=str, default= 'linear.yml',
                             help='Config path for running experiment')
-    # parser.add_argument('--run_meds', type=str, nargs='+', default=['VCUDA', 'DDS', 'GraNDAG', 'MCSL', 'DiBS', 'BaDAG'])
-    parser.add_argument('--run_meds', type=str, nargs='+', default=['BaDAG'])
+    parser.add_argument('--run_meds', type=str, nargs='+', default=['VCUDA', 'DDS', 'GraNDAG', 'MCSL', 'DiBS', 'BaDAG'])
+    # parser.add_argument('--run_meds', type=str, nargs='+', default=['BaDAG'])
     parser.add_argument('--log', type=str, default='WARN', choices='FATAL ERROR WARN INFO DEBUG NOTSET'.split())
     parser.add_argument('--wandb', action='store_true')
     parser.add_argument('--plot', action='store_true')

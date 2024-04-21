@@ -23,7 +23,7 @@ SAVE_DIR = CUR_DIR / 'results'
 PLOT_DIR = CUR_DIR / 'plot'
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
-colors = ['red', 'orange', 'green', 'purple', 'steelblue']
+colors = ['red', 'orange', 'green', 'purple', 'steelblue', 'gold']
 higher_metrics = ['AUC-ROC', 'AUC-PR']
 
 def format_metric(metric):
@@ -57,7 +57,6 @@ def get_res(data_cfg, methods):
     return total_res
 
 def plot_training_time(total_res, outdir=None):
-    colors = ['red', 'orange', 'green', 'purple', 'steelblue']
     df = pd.melt(total_res, id_vars=['Method', 'Num_vars'], value_vars='Training time', value_name='Value', var_name='Metric')
     df['Same'] = ''
     df['Method'] = df['Method'].map(change_method_name)
@@ -92,6 +91,7 @@ def plot_structure_synthetic(total_res, outfile):
     df = pd.melt(total_res, id_vars=['Method', 'Num_vars', 'dag_type'], value_vars=metrics, value_name='Value', var_name='Metric')
     df.Metric = df.Metric.map(format_metric)
     df['Method'] = df['Method'].map(change_method_name)
+    # print(df.Method.unique())
     palette = dict(zip(df.Method.unique(), colors))
     dag_type_dict = {
         'ER':  'Erdős-Rényi', 
@@ -169,7 +169,7 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--cfg_file', type=str, default= 'linear.yml',
                             help='Config path for running experiment')
-    parser.add_argument('--methods', type=str, nargs='+', default=['VCUDA', 'GraNDAG', 'MCSL', 'DiBS', 'DDS',])
+    parser.add_argument('--methods', type=str, nargs='+', default=['VCUDA', 'GraNDAG', 'MCSL', 'DiBS', 'DDS', 'BaDAG'])
     args = parser.parse_args() 
     # viz_structure_synthetic(args.cfg_file)
     viz_training_time(args.cfg_file, filename='training_time_plot.pdf')
