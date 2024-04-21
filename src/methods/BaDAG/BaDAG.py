@@ -90,15 +90,12 @@ def BaDAG(X, args_model, args_data, **kwargs):
 
     training_time = t.elapsed
     W_adj_samples, params, buffers, A_samples = model.get_weighted_adj_matrix(samples=args_model['n_posteriors'], return_adj=True)
-    test_mse = mse(model=model, X=X_test, W_adj_samples=W_adj_samples, params=params, buffers=buffers, batch_size=args_model['eval_batchsize'])
+    test_mse = -1
+    if X_test is not None:
+        test_mse = mse(model=model, X=X_test, W_adj_samples=W_adj_samples, params=params, buffers=buffers, batch_size=args_model['eval_batchsize'])
     post_dags = A_samples.cpu().numpy()
-    W_adj_samples = W_adj_samples.cpu().numpy()
-    pred_prob = np.mean(W_adj_samples.reshape(W_adj_samples.shape[0], -1), axis=0)
-
-    # save_dir = Path(f'exps/results/{Path(__file__).with_suffix("").name}/{datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")}')
-    # save_dir.mkdir(parents=True, exist_ok=True)
-    # np.save(save_dir / 'post_dags.npy', post_dags)
-    # np.save(save_dir / 'thetas.npy', W_adj_samples.cpu().numpy())
+    # W_adj_samples = W_adj_samples.cpu().numpy()
+    pred_prob = np.mean(post_dags.reshape(post_dags.shape[0], -1), axis=0)
 
     # ret = dict(save_dir=str(save_dir.relative_to('.')), test_mse=test_mse, training_time=t.elapsed)
     return post_dags, test_mse, pred_prob, training_time

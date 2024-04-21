@@ -2,6 +2,7 @@ n_jobs: 10
 data:
   datanames: [sachs]
   dag_type: SF
+  method: nonlinear
   n_dataset: 10
 methods:
   VCUDA:
@@ -76,3 +77,29 @@ methods:
     run: false
     n_posterior_samples: 100
     steps: 3000
+
+  BaDAG: 
+    run: true
+    n_posteriors: 100
+    model_params: 
+      num_chains: 10
+      norm_layers: true,
+      res_connection: true,
+      random_seed: [0]
+      scale_noise: 0.01
+      scale_noise_p: 0.1
+      sinkhorn_n_iter: 3000
+      VI_norm: true
+      input_perm: false
+      lambda_sparse: 1200
+      sparse_init: false
+    train_params: 
+      learning_rate: 3.e-4
+      batch_size: 128
+      stardardize_data_mean: false
+      stardardize_data_std: false
+      max_epochs: 500
+    eval_batchsize: 128
+    device: gpu
+    random_state: 0
+    verbose: false

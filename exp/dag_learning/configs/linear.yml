@@ -2,9 +2,9 @@ n_jobs: 10
 data:
   n_dataset: 10
   # graph
-  d: [10, 30, 50] # just for demo. In the paper: [10, 50]
+  d: [10] #, 30, 50] # just for demo. In the paper: [10, 50]
   e_coef: 1
-  dag_type: [ER, SF]
+  dag_type: [SF]
   seed: 123
   # data
   N: 1000
@@ -13,15 +13,14 @@ data:
   noise_scale: 1.
 methods:
   VCUDA:
-    run: true
-    run: true
+    run: false
     verbose: false
     n_posterior_samples: 100
     # dataloader
     seed_dataset: 0
     split: [0.9, 0.1]
     num_worker: 0
-    batch_size: 64 # Batch size. i 
+    batch_size: 256 # Batch size.
     # args_achitecture: args for network architecture of FuntionalModel
     seed_model: 0
     hidden_dims: [] 
@@ -41,7 +40,6 @@ methods:
     max_epochs: 500
     val_freq: 10
     log_freq: 100
-    device: cuda
     device: cuda
 
   DDS:
@@ -88,3 +86,30 @@ methods:
     run: false
     steps: 3000
     n_posterior_samples: 100
+
+  BCDnets: 
+    run: false
+
+  BaDAG: 
+    run: true
+    n_posteriors: 100
+    model_params: 
+      num_chains: 10
+      random_seed: [0]
+      scale_noise: 0.01
+      scale_noise_p: 0.1
+      sinkhorn_n_iter: 3000
+      VI_norm: false
+      input_perm: false
+      lambda_sparse: 100
+      sparse_init: false
+    train_params: 
+      learning_rate: 1.e-3
+      batch_size: 256
+      stardardize_data_mean: false
+      stardardize_data_std: false
+      max_epochs: 500
+    eval_batchsize: 256
+    device: cpu
+    random_state: 0
+    verbose: false

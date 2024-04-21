@@ -1,8 +1,8 @@
-n_jobs: 10
+n_jobs: 5
 data:
   n_dataset: 10
   # graph
-  d: [10, 30, 50] #just for demo. In the paper: [10, 50]
+  d: [10] #just for demo. In the paper: [10, 50]
   e_coef: 1
   dag_type: [ER, SF]
   seed: 123
@@ -13,7 +13,7 @@ data:
   noise_scale: 1.
 methods:
   VCUDA:
-    run: true
+    run: false
     verbose: false
     n_posterior_samples: 100
     # dataloader
@@ -82,3 +82,29 @@ methods:
     run: false
     steps: 3000
     n_posterior_samples: 100
+
+  BaDAG: 
+    run: false
+    n_posteriors: 100
+    model_params: 
+      num_chains: 10
+      norm_layers: true
+      res_connection: true
+      random_seed: [0]
+      sinkhorn_n_iter: 3000
+      scale_noise_p: 0.1
+      scale_noise: 0.01
+      VI_norm: true
+      input_perm: true
+      lambda_sparse: 500
+      sparse_init: false
+    train_params: 
+      learning_rate: 3.e-4
+      batch_size: 256
+      stardardize_data_mean: false
+      stardardize_data_std: false
+      max_epochs: 800
+    eval_batchsize: 256
+    device: cpu
+    random_state: 0
+    verbose: false
