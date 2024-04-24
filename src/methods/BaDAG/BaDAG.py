@@ -54,6 +54,9 @@ def mse(model: BayesDAGNonLinear, X, W_adj_samples, params, buffers, batch_size)
 def BaDAG(X, args_model, args_data, **kwargs): 
          # n_posteriors, model_name, model_params, train_params, eval_batchsize, device, random_state, verbose, **kwargs):
     X_train, X_test = X
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    X_train = (X_train - mean) / std
+    X_test = (X_test - mean) / std
     _, d = X_train.shape
     # device: cpu, gpu, or number (i.e., 0 = cuda:0)
     device = get_torch_device(args_model['device'])

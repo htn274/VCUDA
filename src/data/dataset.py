@@ -13,6 +13,9 @@ def load_dataset(dataname, i_dataset, load_test=True, **kwargs):
         X_test = np.load(data_dir / f'data_test_{i_dataset}.npy')
     else:
         X_test = None
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    X_train = (X_train - mean) / std
+    X_test = (X_test - mean) / std
     return adjacency, X_train, X_test
 
 def load_real_dataset(dataname):
@@ -53,12 +56,18 @@ def get_data_loader(X: np.array, batch_size:int, num_worker:int, split: list, se
     return train_loader, val_loader
 
 if __name__ == '__main__':
-    print(list(load_real_dataset(dataname='sachs')))
+    # print(list(load_real_dataset(dataname='sachs')))
     # seed = 0
-    # X, adj = load_dataset(
-    #         dataname='ER_d10_e20_N1000_gp',
-    #         i_dataset=1,
-    # )
+    adj, X_train, X_test = load_dataset(
+            dataname='ER_d10_e10_N1000_gauss',
+            i_dataset=1,
+    )
+    print(X_train.std(axis=0))
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    X_train = (X_train - mean) / std
+    X_test = (X_test - mean) / std
+    print(X_train.std(axis=0))
+    print(X_test.std(axis=0))
     # with torch.random.fork_rng():
     #     torch.random.manual_seed(seed)
     #     train_loader, val_loader, test_loader = get_data_loader(
