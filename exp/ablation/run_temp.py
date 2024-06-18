@@ -117,17 +117,19 @@ def plot(args):
     metrics = ['Dir-AUC-ROC', 'Dir-AUC-PR', 'MSE']
     df = pd.melt(df, id_vars=['temp_p'], value_vars=metrics, value_name='Value', var_name='Metric')
     df.Metric = df.Metric.map(format_metric)
+    print(df.Metric.unique())
     df['Same'] = ''
     colors = ['red', 'orange', 'green', 'purple', 'steelblue']
-    plt.rcParams.update(figsizes.aaai2024_half())
-    plt.rcParams.update(axes.lines())
-    plt.rcParams.update(fontsizes._from_base(base=9))
-    g = sns.FacetGrid(df, row='Same', col='Metric', sharey=False, aspect=1.2)
+    g = sns.FacetGrid(df, row='Same', col='Metric', sharey=False, aspect=1)
     g.map_dataframe(sns.lineplot, x='temp_p', y='Value', palette=colors,  errorbar='se', err_style='band', markers=True)
-    g.set_xlabels(r'Temperature $t$')
+    g.set_xlabels(r'Temperature $t$', fontsize=12)
     g.set_ylabels('')
-    g.set_titles(r'{col_name}')
-    for _, ax in enumerate(g.axes.flat):
+    g.set_yticklabels(fontsize=14)
+    g.set_xticklabels(fontsize=12)
+    g.set_titles(r'{col_name}', size=13)
+    g.set(xlim=(0.1, 1.0))
+    for i, ax in enumerate(g.axes.flat):
+        ax.yaxis.set_major_locator(plt.MaxNLocator(5))
         ax.grid(axis='y', linestyle='--')
         ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     g.tight_layout() 

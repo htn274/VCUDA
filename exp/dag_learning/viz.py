@@ -64,7 +64,7 @@ def plot_training_time(total_res, outdir=None):
     plt.rcParams.update(figsizes.aaai2024_half())
     plt.rcParams.update(axes.lines())
     plt.rcParams.update(fontsizes._from_base(base=9))
-    g = sns.FacetGrid(df, row='Same', col='Metric', sharey=False, aspect=1.2)
+    g = sns.FacetGrid(df, row='Same', col='Metric', sharey=False, aspect=2.2)
     g.map_dataframe(sns.lineplot, x='Num_vars', y='Value', hue='Method', 
                     marker='o', errorbar=('ci', 95), palette=palette)
     g.set_xlabels(r'\#Variables')

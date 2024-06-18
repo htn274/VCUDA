@@ -79,7 +79,7 @@ methods:
     steps: 3000
 
   BaDAG: 
-    run: true
+    run: false
     n_posteriors: 100
     model_params: 
       num_chains: 10
