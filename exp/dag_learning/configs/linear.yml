@@ -3,7 +3,7 @@ data:
   n_dataset: 10
   # graph
   d: [10] #, 30, 50] # just for demo. In the paper: [10, 50]
-  e_coef: 4
+  e_coef: 2
   dag_type: [ER, SF]
   seed: 123
   # data
