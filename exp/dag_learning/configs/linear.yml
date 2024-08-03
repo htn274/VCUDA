@@ -2,8 +2,8 @@ n_jobs: 10
 data:
   n_dataset: 10
   # graph
-  d: [10, 30, 50] # just for demo. In the paper: [10, 50]
-  e_coef: 1
+  d: [10] #, 30, 50] # just for demo. In the paper: [10, 50]
+  e_coef: 4
   dag_type: [ER, SF]
   seed: 123
   # data
@@ -86,9 +86,6 @@ methods:
     run: false
     steps: 3000
     n_posterior_samples: 100
-
-  BCDnets: 
-    run: false
 
   BaDAG: 
     run: false

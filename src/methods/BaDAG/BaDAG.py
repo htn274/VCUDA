@@ -71,7 +71,7 @@ def BaDAG(X, args_model, args_data, **kwargs):
     model = {'linear': BayesDAGLinear, 'nonlinear': BayesDAGNonLinear}.get(model_name)
 
     variables = Variables.create_from_data_and_dict(X_train, np.ones_like(X_train))
-    model: BayesDAGNonLinear = model.create(model_id, save_dir, variables, model_params, device=device)
+    model = model.create(model_id, save_dir, variables, model_params, device=device)
 
     if isinstance(model, TorchModel):
         num_trainable_parameters = sum(p.numel() for p in model.parameters())

@@ -19,4 +19,5 @@ def MCSL(X, args_model, args_data, **kwargs):
         w_prime = torch.as_tensor(pred_adj[0], device=model.device)
         X_test_tensor = torch.as_tensor(X_test, device=model.device)
         test_mse = model.masked_model._get_mse_loss(X_test_tensor, w_prime) / np.prod(X_test.shape)
+        test_mse = test_mse.item()
     return pred_adj, test_mse, pred_score, training_time

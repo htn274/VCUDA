@@ -130,6 +130,7 @@ class ContractiveInvertibleGNN(nn.Module):
         """
 
         #return torch.matmul(X,W_adj).transpose(0,1)
+        X = X.double()
         if len(W_adj.shape) == 2:
             W_adj = W_adj.unsqueeze(0)
         if self.model_type == "linear":
